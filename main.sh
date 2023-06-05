@@ -1,26 +1,46 @@
 #!/bin/bash
 
+
+function createDB {
+  echo -e "\nCreating a new database...\n"
+  echo -e "Enter Database Name: \c"
+  read dbName
+      if [[ ! $dbName =~ ^[a-zA-Z0-9_-]+$ ]]; then
+        echo "Invalid database name. Please try again."
+        createDB
+    fi
+  mkdir ./$dbName
+  if [[ $? == 0 ]]
+  then
+    echo "Database Created Successfully"
+  else
+    echo "Error Creating Database $dbName"
+  fi
+}
+
+
 # Create the "database" directory if it doesn't exist
-if [ ! -d "database" ]; then
+if [ ! -d "databases" ]; then
     echo "Database directory does not exist. Creating..."
-    mkdir "database" || exit 1
+    mkdir "databases" || exit 1
 fi
 
 # Change to the "database" directory
-cd "database" || exit 1
+cd "databases" || exit 1
 
 
 # Menu options
 options=("Create Database" "List Database" "Drop Database" "Connect to Database" "Quit")
 
+PS3="Please select an option (enter the number): "
+
 # Display the menu and read user input
 select choice in "${options[@]}"; do
     case $choice in
-        "Create Database\n")
-            echo "Creating a new database..."
-            # Add your code for creating a database here
+        "Create Database")
+            createDB
             ;;
-        "List Database\n")
+        "List Database")
             echo "Listing existing databases..."
             # Add your code for listing databases here
             ;;
@@ -41,4 +61,5 @@ select choice in "${options[@]}"; do
             ;;
     esac
 done
+
 
