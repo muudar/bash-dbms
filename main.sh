@@ -41,7 +41,7 @@ select choice in "${options[@]}"; do
             createDB
             ;;
         "List Database")
-            echo "Listing existing databases..."
+            echo "Listing existing databases...youssefnassar"
             # Add your code for listing databases here
             ;;
         "Drop Database")
