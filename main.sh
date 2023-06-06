@@ -119,7 +119,7 @@ function printDBmenu() {
     read -p "Enter your choice: " choice
         case $choice in
         1)  createTable;;
-        2)  echo "Drop Table";;
+        2)  dropTable;;
         3)  echo "Insert into table";;
         4)  echo "Select from table";;
         5)  echo "Delete from table";;
