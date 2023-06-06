@@ -135,7 +135,7 @@ function printDBmenu() {
         4)  echo "Select from table";;
         5)  echo "Delete from table";;
         6)  echo "Update table";;
-        7)  echo "List table";;
+        7)  ls;;
         8)  cd .. 
         menuOptions ;;
         *) echo "Invalid option. Please try again." 
