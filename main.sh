@@ -117,6 +117,10 @@ read tableName
   fi
   printDBmenu
 }
+
+function insertToTable(){
+   
+}
 function printDBmenu() {
     echo -e "\nSelect an option:"
     echo -e "\n1. Create table"
@@ -125,13 +129,13 @@ function printDBmenu() {
     echo -e "\n4. Select from table"
     echo -e "\n5. Delete from table"
     echo -e "\n6. Update table"
-    echo -e "\n7. List table"
+    echo -e "\n7. List tables"
     echo -e "\n8. Back\n"
     read -p "Enter your choice: " choice
         case $choice in
         1)  createTable;;
         2)  dropTable;;
-        3)  echo "Insert into table";;
+        3)  insertToTable ;;
         4)  echo "Select from table";;
         5)  echo "Delete from table";;
         6)  echo "Update table";;
