@@ -108,7 +108,14 @@ echo -e "Table Name: \c"
 }
 
 function dropTable(){
-
+read tableName
+    rm $tableName .$tableName
+  if [[ $? == 0 ]]; then
+    echo "Table Dropped Successfully"
+  else
+    echo "Table Not found"
+  fi
+  printDBmenu
 }
 function printDBmenu() {
     echo -e "\nSelect an option:"
