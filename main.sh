@@ -40,6 +40,10 @@ function removeDB() {
   fi
   removeDB
 }
+
+function createTable(){
+  
+}
 function printDBmenu() {
     echo -e "\nSelect an option:"
     echo -e "\n1. Create table"
@@ -51,7 +55,7 @@ function printDBmenu() {
     echo -e "\n7. Back\n"
     read -p "Enter your choice: " choice
         case $choice in
-        1)  echo "Create Table";;
+        1)  createTable;;
         2)  echo "Drop Table";;
         3)  echo "Insert into table";;
         4)  echo "Select from table";;
