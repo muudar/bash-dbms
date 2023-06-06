@@ -272,14 +272,14 @@ if ! [[ -f $tName ]]; then
         oldValue=$(awk 'BEGIN{FS="|"}{if(NR=='$NR'){for(i=1;i<=NF;i++){if(i=='$setFid') print $i}}}' $tName 2>>./.error.log)
         echo $oldValue
         sed -i ''$NR's/'$oldValue'/'$newValue'/g' $tName 2>>./.error.log
-        echo "Row Updated Successfully"
+        echo "Row Updated Successfully"@
       fi
     fi
   fi
   printDBmenu
 }
 
-function selectCond(6) {
+function selectCond() {
   echo -e "Enter required FIELD name: \c"
   read field
   fid=$(awk 'BEGIN{FS="|"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
