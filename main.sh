@@ -132,7 +132,7 @@ if ! [[ -f $tableName ]]; then
 # Check if the table name contains only letters
 elif [[ ! $tableName =~ ^[a-zA-Z]+$ ]]; then
   # If it contains non-letter characters, print an error message and call the printDBmenu function
-  echo "Table name can only contain letters!"
+  echo "Table name can only contain letters!!"
   printDBmenu
 fi
 
