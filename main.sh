@@ -45,6 +45,45 @@ function removeDB() {
   fi
   removeDB
 }
+function printDBmenu() {
+    echo -e "\nSelect an option:"
+    echo -e "\n1. Create table"
+    echo -e "\n2. Drop table"
+    echo -e "\n3. Insert into table"
+    echo -e "\n4. Select from table"
+    echo -e "\n5. Delete from table"
+    echo -e "\n6. Update table"
+    echo -e "\n7. Back\n"
+    read -p "Enter your choice: " choice
+        case $choice in
+        1)  echo "Create Table";;
+        2)  echo "Drop Table";;
+        3)  echo "Insert into table";;
+        4)  echo "Select from table";;
+        5)  echo "Delete from table";;
+        6)  echo "Update table";;
+        7)  printMenu;;
+        *) echo "Invalid option. Please try again." 
+        printDBmenu ;;
+    esac
+}
+
+function connectDB(){
+  echo -e "\nEnter the database name (or ! to return): \c"
+  read dirname
+      if [ "$dirname" = "!" ]; then
+        printMenu
+        return
+    fi
+  ls
+  if [ -d "$dirname" ]; then
+    cd dirname
+    printDBmenu
+  else
+    echo -e "\nNo such database exists.\n"
+  fi
+  connectDB
+}
 
 # Create the "database" directory if it doesn't exist
 if [ ! -d "databases" ]; then
@@ -76,7 +115,8 @@ select choice in "${options[@]}"; do
             removeDB
             ;;
         "Connect to Database")
-            echo "Connecting to a database..."
+            echo "Connecting to a database..." 
+            ConnectDB
             ;;
         "Quit")
             echo "Exiting..."
