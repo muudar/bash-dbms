@@ -179,13 +179,19 @@ function insertToTable(){
 function deleteFromTable(){
   echo -e "Enter Table Name: \c"
   read tName
+    if ! [[ -f $tName ]]; then
+    echo "Table $tName doesn't exist!"
+    deleteFromTable
+  elif [[ ! $tName =~ ^[a-zA-Z]+$ ]]; then
+  echo "Table name can only contain letters!"
+  deleteFromTable
+  fi
   echo -e "Enter Condition Column name: \c"
   read field
   fid=$(awk 'BEGIN{FS="|"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
   if [[ $fid == "" ]]
   then
     echo "Not Found"
-    tablesMenu
   else
     echo -e "Enter Condition Value: \c"
     read val
@@ -193,14 +199,13 @@ function deleteFromTable(){
     if [[ $res == "" ]]
     then
       echo "Value Not Found"
-      tablesMenu
     else
       NR=$(awk 'BEGIN{FS="|"}{if ($'$fid'=="'$val'") print NR}' $tName 2>>./.error.log)
       sed -i ''$NR'd' $tName 2>>./.error.log
       echo "Row Deleted Successfully"
-      tablesMenu
     fi
   fi
+  printDBmenu
 }
 function printDBmenu() {
     echo -e "\nSelect an option:"
