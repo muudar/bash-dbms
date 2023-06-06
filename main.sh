@@ -336,7 +336,6 @@ function selectMenu () {
   esac
   printDBmenu
 }
-
 function printDBmenu() {
     echo -e "\nSelect an option:"
     echo -e "\n1. Create table"
