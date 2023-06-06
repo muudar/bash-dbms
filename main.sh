@@ -278,16 +278,64 @@ if ! [[ -f $tName ]]; then
   fi
   printDBmenu
 }
-function selectMenu {
+
+function selectCond() {
+  echo -e "Enter required FIELD name: \c"
+  read field
+  fid=$(awk 'BEGIN{FS="|"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
+  if [[ $fid == "" ]]
+  then
+    echo "Not Found"
+    selectCond
+  else
+    echo -e "\nSupported Operators: [==, !=, >, <, >=, <=] \nSelect OPERATOR: \c"
+    read op
+    if [[ $op == "==" ]] || [[ $op == "!=" ]] || [[ $op == ">" ]] || [[ $op == "<" ]] || [[ $op == ">=" ]] || [[ $op == "<=" ]]
+    then
+      echo -e "\nEnter required VALUE: \c"
+      read val
+      res=$(awk 'BEGIN{FS="|"}{if ($'$fid$op$val') print $0}' $tName 2>>./.error.log |  column -t -s '|')
+      if [[ $res == "" ]]
+      then
+        echo "Value Not Found"
+        selectCond
+      else
+        awk 'BEGIN{FS="|"}{if ($'$fid$op$val') print $0}' $tName 2>>./.error.log |  column -t -s '|'
+        selectCond
+      fi
+    else
+      echo "Unsupported Operator\n"
+      selectCond
+    fi
+  fi
+}
+function selectMenu () {
+  echo -e "Enter Table Name: \c"
+  read tName
+    if ! [[ -f $tName ]]; then
+    echo "Table $tName doesn't exist!"
+    selectMenu
+  fi
   echo "1. Select All From a Table"
   echo "2. Select Specific Row from a Table"
+  echo "3. Select Specific Column from a Table"
   echo -e "Enter Choice: \c"
   read ch
   case $ch in
-    1) echo "Select All" ;;
-    2) echo "Specific Row" ;;
+    1)   column -t -s '|' $tName 2>>./.error.log
+  if [[ $? != 0 ]]
+  then
+    echo "Error Displaying Table $tName"
+  fi
+  selectMenu;;
+    2) selectCond $tName ;;
+    3)   echo -e "Enter Column Number: \c"
+  read colNum
+  awk 'BEGIN{FS="|"}{print $'$colNum'}' $tName ;;
     *) echo " Wrong Choice " ; selectMenu;
   esac
+  printDBmenu
+}
 
 function printDBmenu() {
     echo -e "\nSelect an option:"
@@ -304,7 +352,7 @@ function printDBmenu() {
         1)  createTable;;
         2)  dropTable;;
         3)  insertToTable ;;
-        4)  echo "Select from table";;
+        4)  selectMenu ;;
         5)  deleteFromTable;;
         6)  updateTable ;;
         7)  ls printDBmenu;;
