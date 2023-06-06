@@ -114,7 +114,7 @@ select choice in "${options[@]}"; do
             ;;
         "Connect to Database")
             echo "Connecting to a database..." 
-            ConnectDB
+            connectDB
             ;;
         "Quit")
             echo "Exiting..."
