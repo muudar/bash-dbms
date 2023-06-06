@@ -110,7 +110,7 @@ echo -e "Table Name: \c"
 function dropTable(){
   echo -e "Enter Table Name: \c"
 read tableName
-    rm $tableName .$tableName..
+    rm $tableName .$tableName
   if [[ $? == 0 ]]; then
     echo "Table Dropped Successfully"
   else
