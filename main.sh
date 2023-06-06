@@ -150,7 +150,7 @@ for (( i = 2; i <= $colsNum; i++ )); do
   colType=$( awk 'BEGIN{FS="|"}{if(NR=='$i') print $2}' .$tableName)
   colKey=$( awk 'BEGIN{FS="|"}{if(NR=='$i') print $3}' .$tableName)
 
-  # Prompt the user for data input for the column
+  # Prompt the user for data inputs for the column
   echo -e "$colName ($colType) = \c"
   read data
 
