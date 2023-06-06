@@ -89,6 +89,7 @@ select choice in "${options[@]}"; do
             echo "Invalid option. Please select a valid option."
             ;;
     esac
+            echo "bo2la"
 done
 
 
