@@ -1,10 +1,18 @@
 #!/bin/bash
 
+function printMenu {
+    echo -e "\n1-Create Database\n\n2-List Database\n\n3-Drop Database\n\n4-Connect to Database\n\n5-Quit\n"
+}
 
 function createDB {
   echo -e "\nCreating a new database...\n"
+  echo -e "\nEnter '!' to return.\n"
   echo -e "Enter Database Name: \c"
   read dbName
+      if [ "$dbName" = "!" ]; then
+        printMenu
+        return
+    fi
       if [[ ! $dbName =~ ^[a-zA-Z0-9_-]+$ ]]; then
         echo "Invalid database name. Please try again."
         createDB
@@ -16,7 +24,9 @@ function createDB {
   else
     echo "Error Creating Database $dbName"
   fi
+  printMenu
 }
+
 
 
 # Create the "database" directory if it doesn't exist
@@ -32,7 +42,7 @@ cd "databases" || exit 1
 # Menu options
 options=("Create Database" "List Database" "Drop Database" "Connect to Database" "Quit")
 
-PS3="Please select an option (enter the number): "
+PS3="Please select a menu option: "
 
 # Display the menu and read user input
 select choice in "${options[@]}"; do
