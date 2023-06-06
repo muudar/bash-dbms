@@ -114,7 +114,8 @@ function printDBmenu() {
     echo -e "\n4. Select from table"
     echo -e "\n5. Delete from table"
     echo -e "\n6. Update table"
-    echo -e "\n7. Back\n"
+    echo -e "\n7. List table"
+    echo -e "\n8. Back\n"
     read -p "Enter your choice: " choice
         case $choice in
         1)  createTable;;
@@ -123,7 +124,8 @@ function printDBmenu() {
         4)  echo "Select from table";;
         5)  echo "Delete from table";;
         6)  echo "Update table";;
-        7)  cd .. 
+        7)  echo "List table";;
+        8)  cd .. 
         menuOptions ;;
         *) echo "Invalid option. Please try again." 
         printDBmenu ;;
