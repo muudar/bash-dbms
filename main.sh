@@ -34,7 +34,6 @@ function removeDB() {
         printMenu
         return
     fi
-  ls
   if [ -d "$dirname" ]; then
     rm -r "$dirname"
     echo -e "\nDatabase file '$dirname' has been removed.\n"
@@ -75,7 +74,6 @@ function connectDB(){
         printMenu
         return
     fi
-  ls
   if [ -d "$dirname" ]; then
     cd dirname
     printDBmenu
