@@ -119,73 +119,105 @@ read tableName
 }
 
 function insertToTable(){
-   echo -e "Table Name: \c"
-  read tableName
-  if ! [[ -f $tableName ]]; then
-    echo "Table $tableName doesn't exist!"
-    printDBmenu
-  elif [[ ! $tableName =~ ^[a-zA-Z]+$ ]]; then
+# Prompt the user for the table name
+echo -e "Table Name: \c"
+read tableName
+
+# Check if the table file exists
+if ! [[ -f $tableName ]]; then
+  # If it doesn't exist, print an error message and call the printDBmenu function
+  echo "Table $tableName doesn't exist!"
+  printDBmenu
+# Check if the table name contains only letters
+elif [[ ! $tableName =~ ^[a-zA-Z]+$ ]]; then
+  # If it contains non-letter characters, print an error message and call the printDBmenu function
   echo "Table name can only contain letters!"
   printDBmenu
+fi
+
+# Get the number of columns in the table
+colsNum=`awk 'END{print NR}' .$tableName`
+
+# Set the column and row separators
+sep="|"
+rSep="\n"
+
+# Loop through each column
+for (( i = 2; i <= $colsNum; i++ )); do
+  # Get the column name, type, and key from the table file
+  colName=$(awk 'BEGIN{FS="|"}{ if(NR=='$i') print $1}' .$tableName)
+  colType=$( awk 'BEGIN{FS="|"}{if(NR=='$i') print $2}' .$tableName)
+  colKey=$( awk 'BEGIN{FS="|"}{if(NR=='$i') print $3}' .$tableName)
+
+  # Prompt the user for data input for the column
+  echo -e "$colName ($colType) = \c"
+  read data
+
+  # Validate the input based on the column type
+  if [[ $colType == "int" ]]; then
+    # If the column type is "int", check if the input is a valid integer
+    while ! [[ $data =~ ^[0-9]*$ ]]; do
+      echo -e "invalid DataType !!"
+      echo -e "$colName ($colType) = \c"
+      read data
+    done
   fi
-  colsNum=`awk 'END{print NR}' .$tableName`
-  sep="|"
-  rSep="\n"
-  for (( i = 2; i <= $colsNum; i++ )); do
-    colName=$(awk 'BEGIN{FS="|"}{ if(NR=='$i') print $1}' .$tableName)
-    colType=$( awk 'BEGIN{FS="|"}{if(NR=='$i') print $2}' .$tableName)
-    colKey=$( awk 'BEGIN{FS="|"}{if(NR=='$i') print $3}' .$tableName)
-    echo -e "$colName ($colType) = \c"
-    read data
 
-    # Validate Input
-    if [[ $colType == "int" ]]; then
-      while ! [[ $data =~ ^[0-9]*$ ]]; do
-        echo -e "invalid DataType !!"
-        echo -e "$colName ($colType) = \c"
-        read data
-      done
-    fi
-     if [[ $colKey == "PK" ]]; then
-      while [[ true ]]; do
-        if [[ $data =~ ^[`awk 'BEGIN{FS="|" ; ORS=" "}{if(NR != 1)print $(('$i'-1))}' $tableName`]$ ]]; then
-          echo -e "invalid input for Primary Key !!"
-        else
-          break;
-        fi
-        echo -e "$colName ($colType) = \c"
-        read data
-      done
-    fi
+  # Validate the input based on the column key
+  if [[ $colKey == "PK" ]]; then
+    # If the column key is "PK", check if the input is unique
+    while [[ true ]]; do
+      if [[ $data =~ ^[`awk 'BEGIN{FS="|" ; ORS=" "}{if(NR != 1)print $(('$i'-1))}' $tableName`]$ ]]; then
+        echo -e "invalid input for Primary Key !!"
+      else
+        break;
+      fi
+      echo -e "$colName ($colType) = \c"
+      read data
+    done
+  fi
 
-    #Set row
-    if [[ $i == $colsNum ]]; then
-      row=$row$data$rSep
-    else
-      row=$row$data$sep
-    fi
-  done
-  echo -e $row"\c" >> $tableName
-  if [[ $? == 0 ]]
-  then
-    echo "Data Inserted Successfully"
+  # Set the row data
+  if [[ $i == $colsNum ]]; then
+    # If this is the last column, add the row separator to the end of the row data
+    row=$row$data$rSep
   else
-    echo "Error Inserting Data into Table $tableName"
+    # Otherwise, add the column separator to the end of the row data
+    row=$row$data$sep
   fi
-  row=""
-  printDBmenu
-}
+done
+
+# Append the row data to the table file
+echo -e $row"\c" >> $tableName
+
+# Print a success or error message based on the outcome of the appending operation
+if [[ $? == 0 ]]
+then
+  echo "Data Inserted Successfully"
+else
+  echo "Error Inserting Data into Table $tableName"
+fi
+
+# Reset the row data and call the printDBmenu function
+row=""
+printDBmenu}
 
 function deleteFromTable(){
   echo -e "Enter Table Name: \c"
   read tName
+    if ! [[ -f $tName ]]; then
+    echo "Table $tName doesn't exist!"
+    deleteFromTable
+  elif [[ ! $tName =~ ^[a-zA-Z]+$ ]]; then
+  echo "Table name can only contain letters!"
+  deleteFromTable
+  fi
   echo -e "Enter Condition Column name: \c"
   read field
   fid=$(awk 'BEGIN{FS="|"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
   if [[ $fid == "" ]]
   then
     echo "Not Found"
-    tablesMenu
   else
     echo -e "Enter Condition Value: \c"
     read val
@@ -193,14 +225,13 @@ function deleteFromTable(){
     if [[ $res == "" ]]
     then
       echo "Value Not Found"
-      tablesMenu
     else
       NR=$(awk 'BEGIN{FS="|"}{if ($'$fid'=="'$val'") print NR}' $tName 2>>./.error.log)
       sed -i ''$NR'd' $tName 2>>./.error.log
       echo "Row Deleted Successfully"
-      tablesMenu
     fi
   fi
+  printDBmenu
 }
 function printDBmenu() {
     echo -e "\nSelect an option:"
@@ -292,4 +323,3 @@ cd "databases" || exit 1
 
 
 menuOptions
-
