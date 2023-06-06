@@ -272,7 +272,7 @@ if ! [[ -f $tName ]]; then
         oldValue=$(awk 'BEGIN{FS="|"}{if(NR=='$NR'){for(i=1;i<=NF;i++){if(i=='$setFid') print $i}}}' $tName 2>>./.error.log)
         echo $oldValue
         sed -i ''$NR's/'$oldValue'/'$newValue'/g' $tName 2>>./.error.log
-        echo "Row Updated Successfully"@
+        echo "Row Updated Successfully"
       fi
     fi
   fi
