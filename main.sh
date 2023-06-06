@@ -279,7 +279,7 @@ if ! [[ -f $tName ]]; then
   printDBmenu
 }
 
-function selectCond() {
+function selectCond(6) {
   echo -e "Enter required FIELD name: \c"
   read field
   fid=$(awk 'BEGIN{FS="|"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
