@@ -46,7 +46,7 @@ function removeDB() {
   removeDB
 }
 
-
+echo "Ahmed Gamal"
 
 # Create the "database" directory if it doesn't exist
 if [ ! -d "databases" ]; then
