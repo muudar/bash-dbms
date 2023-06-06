@@ -336,7 +336,31 @@ function selectMenu () {
   esac
   printDBmenu
 }
-
+function printDBmenu() {
+    echo -e "\nSelect an option:"
+    echo -e "\n1. Create table"
+    echo -e "\n2. Drop table"
+    echo -e "\n3. Insert into table"
+    echo -e "\n4. Select from table"
+    echo -e "\n5. Delete from table"
+    echo -e "\n6. Update table"
+    echo -e "\n7. List tables"
+    echo -e "\n8. Back\n"
+    read -p "Enter your choice: " choice
+        case $choice in
+        1)  createTable;;
+        2)  dropTable;;
+        3)  insertToTable ;;
+        4)  selectMenu ;;
+        5)  deleteFromTable;;
+        6)  updateTable ;;
+        7)  ls printDBmenu;;
+        8)  cd .. 
+        menuOptions ;;
+        *) echo "Invalid option. Please try again." 
+        printDBmenu ;;
+    esac
+}
 
 function connectDB(){
   echo -e "\nEnter the database name (or ! to return): \c"
