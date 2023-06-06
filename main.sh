@@ -48,6 +48,10 @@ echo -e "Table Name: \c"
     echo "Table already exists"
     createTable
     return
+  elif [[ ! $tableName =~ ^[a-zA-Z]+$ ]]; then
+        echo "Invalid table name. Please try again."
+        createTable
+        return
   fi
   echo -e "Number of Columns: \c"
   read colsNum
@@ -97,11 +101,10 @@ echo -e "Table Name: \c"
   if [[ $? == 0 ]]
   then
     echo "Table Created Successfully"
-    echo $tableName
   else
     echo "Error Creating Table $tableName"
-    
   fi
+  printDBmenu
 }
 function printDBmenu() {
     echo -e "\nSelect an option:"
