@@ -46,8 +46,6 @@ function removeDB() {
   removeDB
 }
 
-echo "Ahmed Gamal"
-
 # Create the "database" directory if it doesn't exist
 if [ ! -d "databases" ]; then
     echo "Database directory does not exist. Creating..."
@@ -79,7 +77,6 @@ select choice in "${options[@]}"; do
             ;;
         "Connect to Database")
             echo "Connecting to a database..."
-            # Add your code for connecting to a database here
             ;;
         "Quit")
             echo "Exiting..."
@@ -89,7 +86,6 @@ select choice in "${options[@]}"; do
             echo "Invalid option. Please select a valid option."
             ;;
     esac
-            echo "bo2la"
 done
 
 
