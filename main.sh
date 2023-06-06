@@ -27,6 +27,21 @@ function createDB {
   printMenu
 }
 
+function removeDB() {
+  echo -e "\nEnter the database file name: \c"
+  read filename
+      if [ "$filname" = "!" ]; then
+        printMenu
+        return
+    fi
+  if [ -f "$filename" ]; then
+    rm "$filename"
+    echo -e "\nDatabase file '$filename' has been removed.\n"
+  else
+    echo -e "\nNo such database exists.\n"
+  fi
+}
+
 
 
 # Create the "database" directory if it doesn't exist
@@ -56,7 +71,8 @@ select choice in "${options[@]}"; do
             ;;
         "Drop Database")
             echo "Dropping a database..."
-            # Add your code for dropping a database here
+            removeDB
+		
             ;;
         "Connect to Database")
             echo "Connecting to a database..."
