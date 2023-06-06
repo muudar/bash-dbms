@@ -106,6 +106,10 @@ echo -e "Table Name: \c"
   fi
   printDBmenu
 }
+
+function dropTable(){
+
+}
 function printDBmenu() {
     echo -e "\nSelect an option:"
     echo -e "\n1. Create table"
