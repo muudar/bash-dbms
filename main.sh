@@ -70,8 +70,8 @@ select choice in "${options[@]}"; do
             createDB
             ;;
         "List Database")
-            echo "Listing existing databases..."
-            # Add your code for listing databases here
+            echo -e "\nListing existing databases...\n"
+            ls
             ;;
         "Drop Database")
             echo "Dropping a database..."
