@@ -241,7 +241,7 @@ function updateTable {
   echo -e "Enter Table Name: \c"
   read tName
 if ! [[ -f $tName ]]; then
-    echo "Table doesn't Exist"//
+    echo "Table doesn't Exist"
     updateTable
     return
   fi
