@@ -9,7 +9,7 @@ function createDB {
         menuOptions
         return
     fi
-      if [[ ! $dbName =~ ^[a-zA-Z0-9_-]+$ ]]; then
+      if [[ ! $dbName =~ ^[a-zA-Z]+$ ]]; then
         echo "Invalid database name. Please try again."
         createDB
     fi
