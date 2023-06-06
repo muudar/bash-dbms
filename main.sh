@@ -175,6 +175,10 @@ function insertToTable(){
   row=""
   printDBmenu
 }
+
+function deleteFromTable(){
+  
+}
 function printDBmenu() {
     echo -e "\nSelect an option:"
     echo -e "\n1. Create table"
