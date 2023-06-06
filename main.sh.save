@@ -30,9 +30,7 @@ cd "databases" || exit 1
 
 
 # Menu options
-options=("Create Database" "List Database" "Drop Database" "Connect to Database" "Quit")
-
-PS3="Please select an option (enter the number): "
+options=("Create Database" "List Database" "Drop Database" "Connect to Database" "QuiS3="Please select an option (enter the number): "
 
 # Display the menu and read user input
 select choice in "${options[@]}"; do
@@ -41,7 +39,7 @@ select choice in "${options[@]}"; do
             createDB
             ;;
         "List Database")
-            echo "Listing existing databases..."
+            echo "Listing existing databases...youssefnassar"
             # Add your code for listing databases here
             ;;
         "Drop Database")
