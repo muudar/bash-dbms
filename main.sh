@@ -42,7 +42,7 @@ function removeDB() {
 }
 
 function createTable(){
-  
+
 }
 function printDBmenu() {
     echo -e "\nSelect an option:"
