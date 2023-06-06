@@ -108,6 +108,7 @@ echo -e "Table Name: \c"
 }
 
 function dropTable(){
+  echo -e "Enter Table Name: \c"
 read tableName
     rm $tableName .$tableName
   if [[ $? == 0 ]]; then
@@ -200,9 +201,11 @@ fi
 
 # Reset the row data and call the printDBmenu function
 row=""
-printDBmenu}
+printDBmenu
 
-function deleteFromTable(){
+}
+
+function deleteFromTable() {
   echo -e "Enter Table Name: \c"
   read tName
     if ! [[ -f $tName ]]; then
@@ -229,22 +232,18 @@ function deleteFromTable(){
       NR=$(awk 'BEGIN{FS="|"}{if ($'$fid'=="'$val'") print NR}' $tName 2>>./.error.log)
       sed -i ''$NR'd' $tName 2>>./.error.log
       echo "Row Deleted Successfully"
-    fi
-  fi
-  printDBmenu
+fi
+fi
+printDBmenu
 }
 
 function updateTable {
   echo -e "Enter Table Name: \c"
   read tName
-if [[ -f $tableName ]]; then
-    echo "Table already exists"
-    createTable
+if ! [[ -f $tName ]]; then
+    echo "Table doesn't Exist"
+    updateTable
     return
-  elif [[ ! $tableName =~ ^[a-zA-Z]+$ ]]; then
-        echo "Invalid table name. Please try again."
-        createTable
-        return
   fi
   echo -e "Enter Condition Column name: \c"
   read field
@@ -252,7 +251,6 @@ if [[ -f $tableName ]]; then
   if [[ $fid == "" ]]
   then
     echo "Not Found"
-    tablesMenu
   else
     echo -e "Enter Condition Value: \c"
     read val
@@ -260,7 +258,6 @@ if [[ -f $tableName ]]; then
     if [[ $res == "" ]]
     then
       echo "Value Not Found"
-      tablesMenu
     else
       echo -e "Enter FIELD name to set: \c"
       read setField
@@ -268,7 +265,6 @@ if [[ -f $tableName ]]; then
       if [[ $setFid == "" ]]
       then
         echo "Not Found"
-        tablesMenu
       else
         echo -e "Enter new Value to set: \c"
         read newValue
@@ -277,10 +273,10 @@ if [[ -f $tableName ]]; then
         echo $oldValue
         sed -i ''$NR's/'$oldValue'/'$newValue'/g' $tName 2>>./.error.log
         echo "Row Updated Successfully"
-        tablesMenu
       fi
     fi
   fi
+  printDBmenu
 }
 
 
@@ -302,7 +298,7 @@ function printDBmenu() {
         4)  echo "Select from table";;
         5)  deleteFromTable;;
         6)  updateTable ;;
-        7)  ls;;
+        7)  ls printDBmenu;;
         8)  cd .. 
         menuOptions ;;
         *) echo "Invalid option. Please try again." 
