@@ -278,7 +278,16 @@ if ! [[ -f $tName ]]; then
   fi
   printDBmenu
 }
-
+function selectMenu {
+  echo "1. Select All From a Table"
+  echo "2. Select Specific Row from a Table"
+  echo -e "Enter Choice: \c"
+  read ch
+  case $ch in
+    1) echo "Select All" ;;
+    2) echo "Specific Row" ;;
+    *) echo " Wrong Choice " ; selectMenu;
+  esac
 
 function printDBmenu() {
     echo -e "\nSelect an option:"
