@@ -114,7 +114,7 @@ read tableName
   if [[ $? == 0 ]]; then
     echo "Table Dropped Successfully"
   else
-    echo "Table Not found"
+    echo "Table Not found////"
   fi
   printDBmenu
 }
