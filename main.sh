@@ -127,6 +127,8 @@ read tableName
   printDBmenu
 }
 
+#Function to insert row into table
+
 function insertToTable(){
 # Prompt the user for the table name
 echo -e "Table Name: \c"
@@ -213,6 +215,8 @@ printDBmenu
 
 }
 
+#Function to delete a row with provided conditions
+
 function deleteFromTable() {
   echo -e "Enter Table Name: \c"
   read tName
@@ -244,6 +248,8 @@ fi
 fi
 printDBmenu
 }
+
+#Function to update a certain table with provided conditions, user picks which field to update and the value
 
 function updateTable {
   echo -e "Enter Table Name: \c"
@@ -286,6 +292,8 @@ if ! [[ -f $tName ]]; then
   fi
   printDBmenu
 }
+
+#Function to select a row depending on a certain condition user provides
 
 function selectCond() {
   echo -e "Enter required FIELD name: \c"
