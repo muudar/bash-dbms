@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Function to create Database that contains tables
+
 function createDB {
   echo -e "\nCreating a new database...\n"
   echo -e "\nEnter '!' to return.\n"
@@ -23,6 +25,8 @@ function createDB {
   menuOptions
 }
 
+#Function to remove DB and all of the existing tables
+
 function removeDB() {
   echo -e "\nEnter the database file name (or ! to return): \c"
   read dirname
@@ -40,6 +44,8 @@ function removeDB() {
   fi
   removeDB
 }
+
+#Function to create table with error checking if it exists or not
 
 function createTable(){
 echo -e "Table Name: \c"
@@ -106,6 +112,8 @@ echo -e "Table Name: \c"
   fi
   printDBmenu
 }
+
+#Function to drop table if it exists
 
 function dropTable(){
   echo -e "Enter Table Name: \c"
